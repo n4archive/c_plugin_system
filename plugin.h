@@ -2,7 +2,7 @@
 #define PLUGIN_H
 struct _Plugin {
 	void (*printHello) (struct _Plugin*);
-	void (*destroy)();
+	void* __libhandle;
 };
 typedef struct _Plugin Plugin;
 #endif

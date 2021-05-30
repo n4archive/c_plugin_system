@@ -6,7 +6,7 @@ int main() {
 	if (p == NULL)
 		return 1;
 	p->printHello(p);
-	p->destroy();
+	destroyplug(p);
 	return 0;
 }
 

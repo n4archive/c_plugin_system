@@ -10,12 +10,9 @@
 #include <stdio.h>
 #include "plugin_manager.h"
 
-__voidplugin __destroyplug(Plugin* p, void* libhandle) {
-	void ___internaldplug() {
-		dlclose(libhandle);
-		free(p);
-	}
-	return ___internaldplug;
+void destroyplug(Plugin* p) {
+	dlclose(p->__libhandle);
+	free(p);
 }
 
 Plugin* loadplug(char* name) {
@@ -32,12 +29,12 @@ Plugin* loadplug(char* name) {
 	    dlclose(libhandle);
 	    return NULL;
 	}
-	Plugin* p = malloc(sizeof(Plugin));
+	Plugin* p = (Plugin*) malloc(sizeof(Plugin));
 	int rc = initfunc(p);
-	p->destroy = __destroyplug(p, libhandle);
+	p->__libhandle = libhandle;
 	if (rc < 0) {
 		printf("Plugin returned failure, destroying it again...");
-		p->destroy();
+		destroyplug(p);
 		return NULL;
 	}
 	return p;

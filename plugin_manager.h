@@ -4,4 +4,5 @@
 typedef int (*__PluginInitFunc)(Plugin*);
 typedef void (*__voidplugin)();
 Plugin* loadplug(char* name);
+void destroyplug(Plugin* p);
 #endif
